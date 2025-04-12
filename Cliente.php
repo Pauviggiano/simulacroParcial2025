@@ -3,7 +3,7 @@
         //Atributos o variables Instancia
         private $nombre;
         private $apellido;
-        private $baja;
+        private $baja; //Podria cambiarlo por estado
         private $tipoDocumento;
         private $documento;
 
@@ -35,7 +35,6 @@
             return $this->apellido;
         }
 
-        
         public function setApellido($apellido)
         {
             $this->apellido = $apellido;
@@ -89,7 +88,7 @@
             $mensaje .= "Apellido: " . $this -> getApellido() . "\n";
             $mensaje .= "Tipo de documento: " . $this -> getTipoDocumento() . "\n";
             $mensaje .= $this -> getDocumento() . "\n";
-            $mensaje .= "El estado del cliente es: " . $this -> getBaja() . "\n";
+            $mensaje .= "El estado del cliente es: " . $this -> getBaja() ? "Activo" : "No activo" . "\n";
 
             return $mensaje;
         }

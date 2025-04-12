@@ -1,6 +1,6 @@
 <?php
 
-    include_once 'Moto.php';
+    
     class Venta {
         //ATRIBUTOS - VARIABLES INSTANCIA
         private $numero;
@@ -85,13 +85,19 @@
         */
 
         public function incorporarMoto($objMoto) {
+            $retorno = false;
             if ($objMoto -> getEstado()) {
-                if ($objMoto -> darPrecioVenta() > 0) {
-                    $this -> getMotos()[] = $objMoto;
-                    $suma = $objMoto -> getCosto() + $this -> getPrecioFinal();
+                    $arregloMotos = $this -> getMotos();
+                    $arregloMotos[] = $objMoto;
+                    $this -> setMotos($arregloMotos);
+                    $suma = $this -> getPrecioFinal() + $objMoto -> darPrecioVenta();
                     $this -> setPrecioFinal($suma);
-                }
+
+                    $retorno = true;
+               
+                
             }
+            return $retorno;
         }
     }
 

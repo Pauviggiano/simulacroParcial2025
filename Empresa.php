@@ -1,11 +1,12 @@
 <?php
+    include_once  'Moto.php';
     class Empresa {
         //VARIABLES INSTANCIA - ATRIBUTOS
         private $denominacion;
         private $direccion;
-        private $colClientes;
+        private $colClientes; //
         private $colMotos;
-        private $objVentas = [];
+        private $objVentas;
 
         //METODO CONSTRUCTOR
         public function __construct($denominacion, $direccion, $colClientes, $colMotos, $objVentas) {
@@ -74,7 +75,7 @@
         public function retornarMoto($codigoMoto) {
             $i = 0; //variable para recorrer posiciones de una coleccion
             $motoEncontrada = null; //declaro en null por si no encuentra la moto
-            $cantMotos = count($this -> getcolMotos());//Indica la cantida de posiciones del arreglo colMotos
+            $cantMotos = count($this -> getColMotos());//Indica la cantida de posiciones del arreglo colMotos
 
             //Recorro la coleccion de motos para saber si el codigo por parametros coincide con alguno de la col
             while ($i < $cantMotos && $motoEncontrada == null) {
@@ -88,6 +89,8 @@
             return $motoEncontrada;
         }
 
+       
+
         /** Implementar el método registrarVenta($colCodigosMoto, $objCliente) método que recibe por
          *parámetro una colección de códigos de motos, la cual es recorrida, y por cada elemento de la colección
          *se busca el objeto moto correspondiente al código y se incorpora a la colección de motos de la instancia
@@ -99,25 +102,29 @@
 
         */
 
+        //MODIFICAR ESTA MALLLL Ver el de Palote
         public function registrarVenta($colCodigosMoto, $objCliente) {
             $importeFinal = 0; //Variable retorn
-            /* $venta = null; // por si no se puede hacer la venta */
+                    
             
-            if (!$objCliente -> getBaja()) {//Verifica que el cliente este activo
-                $venta = new Venta(null, date('y-m-d'), $objCliente, [], 0);
-                foreach ($colCodigosMoto as $codigoMoto) {
-                    $moto = $this -> retornarMoto($codigoMoto);
-                    if ($moto && $moto -> getEstado()) {
-                        $venta -> incorporarMoto($moto); //Metodo de venta
-                        $importeFinal += $moto -> darPrecioVenta();
-                    }
+            if ($objCliente -> getBaja()) {
+                $motosParaVenta = [];
+                foreach($colCodigosMoto as $codigo) {
+                    //obtengo el obj moto correspondiente al codigo
+                    $moto = $this -> retornarMoto($codigo);
+                    //Gurda el valor del precio segun el codigo obtenido
+                    $precioMoto = $moto -> darPrecioVenta();
+                    if ($precioMoto > 0) {
+                        $motosParaVenta[] = $moto;//Agrego la moto en el arreglo de motos para venta
+                        $importeFinal += $precioMoto;//Calculo el precio a pagar
+                    } 
                 }
-
-                if ($venta -> getMotos()) {//Si hay motos en la venta
-                    $this -> objVentas = $venta;
-                }
+                $cantVentas = count($this -> objVentas) + 1; //Guardo la cantidad de posiciones del arreglo y le sumo uno para despues ocupar ese valor con la nueva venta
+                $nuevaVenta = new Venta($cantVentas, "23/05/24", $objCliente, $motosParaVenta, $importeFinal);
+                $ventas = $this -> getobjVentas();
+                $ventas [] = $nuevaVenta;
+                $this -> setobjVentas($ventas);
             }
-            
 
             return $importeFinal;
         }
@@ -217,6 +224,13 @@
             $mensaje .= "Listado de ventas: " . $this -> mostrarListadoVentas() . "\n";
 
             return $mensaje;
+
+            //Esto es para mostrar todos los elementos del arreglo Clientes o motos o cualquier arreglo
+            /* $clientes = $this -> getColeccionClientes;
+                $cadenaClientes = ""
+                foreach($clientes as $cliente) {
+                $cadenaClientes .= $cliente . "\n"}
+            */
         }
 
     }

@@ -6,7 +6,7 @@
         private $anioFabricacion;
         private $descripcion;
         private $porcentajeIncrementoAnual;
-        private $estado;
+        private $estado; //Booleano
 
         //METODO CONSTRUCTOR
         public function __construct($codigo, $costo, $anioFabricacion, $descripcion, $porcentajeIncrementoAnual, $estado)
@@ -80,7 +80,7 @@
             $mensaje .= "Año de fabricacion: " . $this -> getAnioFabricacion() . "\n";
             $mensaje .= "Descripcion: " . $this -> getDescripcion() . "\n";
             $mensaje .= "Porcentaje de incremento anual: " . $this -> getPorcentajeIncrementoAnual() . "\n";
-            $mensaje .= "Estado: " . $this -> getEstado() . "\n";
+            $mensaje .= "Estado: " . $this -> getEstado() ? "Activa" : "No activa" . "\n";
 
             return $mensaje;
         }
@@ -88,7 +88,7 @@
         public function darPrecioVenta() {
             $_venta = -1;
             $_compra = $this -> getCosto();
-            $anio = Date("Y");
+            $anio = date("Y");//La mayuscula devuelve el anio completo 2025. Minuscula solo 25
             $anioFab = $anio - $this -> getAnioFabricacion();
             $por_inc_anual = $this -> getPorcentajeIncrementoAnual();
             $estadoMoto = $this -> getEstado();
@@ -101,9 +101,6 @@
             return $_venta;
         }
 
-
     }
-
-
 
 ?>
