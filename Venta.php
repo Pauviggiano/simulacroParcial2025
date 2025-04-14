@@ -86,7 +86,7 @@
 
         public function incorporarMoto($objMoto) {
             $retorno = false;
-            if ($objMoto -> getEstado()) {
+            if ($objMoto -> darPrecioVenta() >= 0 && $this -> cliente -> getBaja()) {
                     $arregloMotos = $this -> getMotos();
                     $arregloMotos[] = $objMoto;
                     $this -> setMotos($arregloMotos);

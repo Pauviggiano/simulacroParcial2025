@@ -84,11 +84,13 @@
 
         //Metodo toString
         public function __tostring(){
+            $estado = $this -> getBaja() ? "Activo" : "No activo";
+
             $mensaje = "Nombre: " . $this -> getNombre() . "\n";
             $mensaje .= "Apellido: " . $this -> getApellido() . "\n";
             $mensaje .= "Tipo de documento: " . $this -> getTipoDocumento() . "\n";
             $mensaje .= $this -> getDocumento() . "\n";
-            $mensaje .= "El estado del cliente es: " . $this -> getBaja() ? "Activo" : "No activo" . "\n";
+            $mensaje .= "El estado del cliente es: " . $estado  . "\n";
 
             return $mensaje;
         }

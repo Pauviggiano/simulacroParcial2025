@@ -86,6 +86,7 @@
         }
 
         public function darPrecioVenta() {
+            
             $_venta = -1;
             $_compra = $this -> getCosto();
             $anio = date("Y");//La mayuscula devuelve el anio completo 2025. Minuscula solo 25
